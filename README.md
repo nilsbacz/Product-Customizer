@@ -5,7 +5,7 @@ This project is a proof of concept for my employer
 for a more efficient and user friendly product customizer.
 It adds features that were required, like adding text elements and is written in js for easy integration.
 
-Features:
+_Features:_
 - add and delete elements
 - feedback for whether or not the elements are still within the given borders of the product
 - preview the product by hiding all helping UI lines
@@ -16,7 +16,7 @@ Features:
   - change font
   - align
 
-Functionality:
+_Functionality:_
 
 The html file consists of 2 parts 
 - the svg which is the preview of the product 
