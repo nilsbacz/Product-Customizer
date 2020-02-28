@@ -1,0 +1,21 @@
+.container {
+    width: 100%;
+    display: flex;
+}
+.container> div {
+   width: 50%;
+}
+#rectanglegroup {
+    cursor: move;
+    fill-opacity:0;
+    stroke:black;
+}
+#textgroup {
+    -ms-user-select: None;
+    -moz-user-select: None;
+    -webkit-user-select: None;
+    user-select: None;
+}
+#scalegroup {
+    cursor: move;
+}

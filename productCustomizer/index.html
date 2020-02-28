@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product Customizer</title>
+    <link rel="stylesheet" href="/css/productCustomizer.css">
+</head>
+<body>
+    <div class="container">
+        <div>
+            <svg id="customizersvg" width="833px" height="1080px">
+                <image xlink:href="/img/product.png" height="100%" width="100%"></image>
+                <g id="textgroup">
+                    <text text-anchor="left" id="currenttext0" font-size="200%" x="250" y="100"></text>
+                </g>
+                <g id="rectanglegroup">
+                    <rect id="collisionbox0" width="0" height="0" x="0" y="0"></rect>
+                </g>
+                <g id="scalegroup">
+<!--                    <image id="scaleelem" xlink:href="/img/scale.png" height="15px" width="15px"></image>-->
+                </g>
+                <g id="linegroup"></g>
+            </svg>
+
+        </div>
+        <div>
+            <label for="input">Input:</label>
+            <br>
+            <textarea placeholder="Dein Text" name="customtextinput" id="input" cols="30" rows="10"></textarea>
+            <br>
+            <button id="newtext">Add Text</button>
+            <button id="removetext">Remove Text</button>
+            <br>
+            <br>
+            <button id="textsizeplus">size +</button>
+            <button id="textsizeminus">size -</button>
+            <br>
+            <br>
+            <button id="smalltext">small text</button>
+            <button id="mediumtext">medium text</button>
+            <button id="bigtext">big text</button>
+            <br>
+            <br>
+            <button id="alignleft">align left</button>
+            <button id="alignmiddle">align middle</button>
+            <button id="alignright">align right</button>
+            <br>
+            <br>
+            <button id="hideboxes">preview product</button>
+            <br>
+            <br>
+            <label for="fonts">Fonts:</label>
+            <div id="fontselectcontainer">
+                <select name="fonts" id="fonts">
+                    <option value="">Standard</option>
+                    <option value="Pacifico" style="font-family:pacifico">Pacifico</option>
+                    <option value="Amatic SC" style="font-family: Amatic SC">Amatic</option>
+                    <option value="Abril Fatface" style="font-family: Abril Fatface">Abril+Fatface</option>
+                    <option value="Righteous" style="font-family: Righteous">Righteous</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script src="/js/productCustomizer.js"></script>
+</body>
+</html>
