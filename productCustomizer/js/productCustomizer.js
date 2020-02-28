@@ -4,26 +4,27 @@ WebFont.load({
     }
 });
 
-//basic elements
-let currenttext = document.getElementById("currenttext0");
-let currentrectangle = document.getElementById("collisionbox0");
-// let scaleelement = document.getElementById("scaleelem");
+//initializing basic elements
 let svg = document.getElementById("customizersvg");
-let textgroup = document.getElementById("textgroup");
-let rectanglegroup = document.getElementById("rectanglegroup");
-let linegroup = document.getElementById("linegroup");
 
-//arange these by the center of the svg and the center of the first element which is always 91.85..
+//text
+let currenttext = document.getElementById("currenttext0");
+let textgroup = document.getElementById("textgroup");
+let newtextsize = "";
+let textid = 0;
+let currentfont = "";
+let currenttextsize = "100%";
+
+//arange these by the center of the svg and the center of the first element which is always 91.85, as long as the content of the first element remains "Text Einfügen"
 let xcoord = getSvgCenter(1)-92;
 let ycoord = currenttext.getAttribute("y");
 
-let newtextsize = "";
+//rectangle
+let currentrectangle = document.getElementById("collisionbox0");
+let rectanglegroup = document.getElementById("rectanglegroup");
 
-let currentfont = "";
-
-let currenttextsize = "100%";
-let textid = 0;
-
+//snapping lines
+let linegroup = document.getElementById("linegroup");
 let snapcoord = {x: 0, y:0};
 let stopvertsnap = false;
 let stophorsnap = false;
@@ -117,7 +118,7 @@ hidebutton.addEventListener("click",()=>{
     }
 });
 
-//currentrectangle movement
+//movement of the rectangles
 let selectedElement = false;
 function bindRectangleEvents(){
     currentrectangle.addEventListener('mousedown',setCurrentElements);
@@ -207,6 +208,11 @@ function clearInput() {
     document.getElementById("input").value ="";
 }
 
+
+/*loads the Input text field up with the text in the svg element
+* by reading the input and creating tspan childs into the current text element
+* applies font, size and coordinates to all the tspans.
+ */
 function modifyPreviewTextContent() {
     //create a new tspan for each /\n|\r/g that is being created -> append more childs to xt element
     let textelements = inputtext.value.split(/[\n\r]/g)||[];
@@ -245,7 +251,7 @@ function modifyPreviewTextContent() {
 function modifyPreviewTextSize(sizevalue) {
     if(sizevalue.replace("%","") > 25){
         currenttextsize = sizevalue;
-        //needs to open this function for resizing all the nodes
+        //reload the tspan elements with the correct size
         modifyPreviewTextContent();
         resizeColisionBox();
     }
@@ -256,6 +262,7 @@ function modifyPreviewTextAlignment(alignmentString) {
     moveTextToRect();
 }
 
+//if the border of the rectangle is out of bounds, colors the lines of the text red
 function overlapWarning() {
     let svgelem = svg;
     let svgheight =  svgelem.getAttribute("height").replace("px","");
@@ -273,6 +280,7 @@ function overlapWarning() {
 
 }
 
+//aligns the rectangle with the bounding box of the text
 function resizeColisionBox() {
     let boundingbox = currenttext.getBBox();
 
@@ -285,7 +293,6 @@ function resizeColisionBox() {
     overlapWarning();
     // moveScaleElementToRectangle();
 }
-
 
 //functions for dragging the rectangles
 function startDrag(evt) {
@@ -305,12 +312,12 @@ function startSnapDrag(evt) {
     }
     dragSnap(evt);
 }
-
+//dragging with snapping enabled
 function dragSnap(evt) {
     if(selectedElement){
         evt.preventDefault();
 
-        //check if mouse has moved enough to stop snapping
+        //check if mouse has moved enough to escape snapping
         if(snapcoord.x !== 0){
             stopvertsnap = Math.abs(getMousePosition(evt).x - snapcoord.x) > 15;
         }
@@ -350,7 +357,7 @@ function dragSnap(evt) {
         overlapWarning();
     }
 }
-//dragging without snapping
+//dragging with snapping disabled
 function drag(evt) {
     if(selectedElement){
         evt.preventDefault();
@@ -375,6 +382,7 @@ function getMousePosition(evt) {
     };
 }
 
+//TODO make movement more precise
 function moveTextToRect() {
     let textofrect = getTextById(getRectangleIdNumber(currentrectangle));
 
@@ -382,7 +390,6 @@ function moveTextToRect() {
     textofrect.setAttribute("y",currentrectangle.getAttribute("y"));
 
     //coords need the size factor and the remaining pixels to fit in the box depending on alignment
-    //-1 because its one pixel before the border (currentrectangle)
     if(textofrect.getAttribute("text-anchor") === "left"){
         xcoord = textofrect.getAttribute("x");
         ycoord = Number(textofrect.getAttribute("y")) + ((currenttextsize.replace("%",""))/3) - 4.333333;
@@ -391,6 +398,7 @@ function moveTextToRect() {
         xcoord = Number(textofrect.getAttribute("x")) + ((Number(currentrectangle.getAttribute("width")) / 2));
         ycoord = Number(textofrect.getAttribute("y")) + ((currenttextsize.replace("%",""))/3) - 4.333333;
     }else {
+        //-1 because its one pixel before the border (currentrectangle)
         xcoord = Number(textofrect.getAttribute("x")) + Number(currentrectangle.getAttribute("width") -1 );
         ycoord = Number(textofrect.getAttribute("y")) + ((currenttextsize.replace("%",""))/3) - 4.333333;
     }
@@ -429,6 +437,7 @@ function setCurrentElements(evt) {
     }
 }
 
+//TODO when adding other elements, this needs a second argument for the id name
 function deleteElement(id) {
     document.getElementById("currenttext" +id).remove();
     document.getElementById("collisionbox" +id).remove();
