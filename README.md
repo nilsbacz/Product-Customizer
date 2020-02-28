@@ -17,9 +17,10 @@ Features:
   - align
 
 Functionality:
+
 The html file consists of 2 parts 
--> the svg which is the preview of the product 
--> and another div with the input fields and buttons to modify the product
+- the svg which is the preview of the product 
+- and another div with the input fields and buttons to modify the product
 
 There is an initial text element with its according rectangle to show the functionality.
 Each Text element is a child of the group "textgroup".
